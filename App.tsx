@@ -62,6 +62,18 @@ function App() {
     }
   };
 
+  const handleStatusChange = async (id: string, newStatus: TaskStatus) => {
+    // Optimistic Update
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, status: newStatus } : t));
+    try {
+      await taskService.update(id, { status: newStatus });
+    } catch (error) {
+      console.error("Failed to update status", error);
+      // Revert if failed
+      fetchTasks();
+    }
+  };
+
   const handleFormSubmit = async (data: CreateTaskDTO) => {
     setIsSubmitting(true);
     try {
@@ -234,7 +246,8 @@ function App() {
                 key={task.id} 
                 task={task} 
                 onEdit={handleEdit} 
-                onDelete={handleDelete} 
+                onDelete={handleDelete}
+                onStatusChange={handleStatusChange}
               />
             ))}
           </div>
