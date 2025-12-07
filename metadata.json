@@ -1,0 +1,5 @@
+{
+  "name": "TaskFlow AI",
+  "description": "A production-ready Task Management Dashboard featuring local persistence, advanced filtering, and Gemini-powered smart task assistance.",
+  "requestFramePermissions": []
+}
